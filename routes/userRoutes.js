@@ -9,10 +9,7 @@ const userController = require("../controllers/userController");
  * tal como se definió en el archivo `routes/index.js`.
  */
 
-router.get("/", userController.index);
 router.post("/", userController.store);
 router.get("/:id", userController.show);
-router.patch("/:id", userController.update);
-router.delete("/:id", userController.destroy);
 
 module.exports = router;
