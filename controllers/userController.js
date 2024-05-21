@@ -3,11 +3,12 @@ const User = require("../models/User");
 const userController = {
   show: async (req, res) => {
     try {
-      const user = await User.findOne({ username: req.params.username }).select("-password");
-      res.json(user);
+      const { username } = req.params;
+      const user = await User.findOne({ username }).select("-password");
+      return res.json(user);
     } catch (err) {
       console.error(err);
-      res.json({ msg: "Ha ocurrido un error al mostrar usuario" });
+      return res.json({ msg: "Ha ocurrido un error al mostrar usuario" });
     }
   },
   store: async (req, res) => {
@@ -23,10 +24,10 @@ const userController = {
         photo,
       });
       await newUser.save();
-      res.json({ msg: "se ha creado el user" });
+      return res.json({ msg: "se ha creado el user" });
     } catch (err) {
       console.error(err);
-      res.json({ msg: "Ha ocurrido un error al crear usuario" });
+      return res.json({ msg: "Ha ocurrido un error al crear usuario" });
     }
   },
 };

@@ -1,24 +1,59 @@
 const Tweet = require("../models/Tweet");
+const User = require("../models/User");
 
 const tweetController = {
-  index: (req, res) => {},
+  index: async (req, res) => {
+    try {
+      const tweets = await Tweet.find().limit(20);
+      return res.json(tweets);
+    } catch (err) {
+      console.error(err);
+      return res.json({ msg: "Ha ocurrido un error al mostrar los tweets" });
+    }
+  },
+
   store: async (req, res) => {
     try {
-      const { user, content, likes } = req.body;
+      const user = req.auth.sub;
+      const { content } = req.body;
+      const author = await User.findById(user);
       const newTweet = new Tweet({
         user,
         content,
-        likes,
       });
       await newTweet.save();
-      res.json({ msg: "Se ha creado un nuevo tweet" });
+      author.tweets.push(newTweet);
+      await author.save();
+
+      return res.json({ msg: "Se ha creado un nuevo tweet" });
     } catch (err) {
       console.error(err);
-      res.json({ msg: "Ha ocurrido un error al crear tweet" });
+      return res.json({ msg: "Ha ocurrido un error al crear tweet" });
     }
   },
-  update: (req, res) => {},
-  destroy: (req, res) => {},
+
+  update: async (req, res) => {
+    const user = req.auth.sub;
+    const tweet = await Tweet.findById(req.params.id);
+
+    if (tweet.likes.includes(user)) {
+      tweet.likes.pull(user);
+    } else {
+      tweet.likes.push(user);
+    }
+    await tweet.save();
+    return res.json({ msg: "se actualizo like" });
+  },
+
+  destroy: async (req, res) => {
+    try {
+      await Tweet.findByIdAndDelete(req.params._id);
+      return res.json({ msg: "se elimino el tweet" });
+    } catch (err) {
+      console.error(err);
+      return res.json({ msg: "Ha ocurrido un error al eliminar el tweet" });
+    }
+  },
 };
 
 module.exports = tweetController;
