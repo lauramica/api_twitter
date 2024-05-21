@@ -11,6 +11,7 @@ const userController = {
       return res.json({ msg: "Ha ocurrido un error al mostrar usuario" });
     }
   },
+
   store: async (req, res) => {
     try {
       const { firstname, lastname, username, password, email, description, photo } = req.body;

@@ -11,6 +11,6 @@ const tweetSchema = new Schema(
   },
 );
 
-const Tweet = mongoose.model("Tweet", tweetSchema); // Entre comillas se coloca el nombre del modelo en mayúscula y en singular.
+const Tweet = mongoose.model("Tweet", tweetSchema);
 
 module.exports = Tweet;

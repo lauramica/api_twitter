@@ -16,8 +16,6 @@ app.listen(port, () => {
   console.log(`[Express] Ingresar a http://localhost:${port}.\n`);
 });
 
-// Esto se ejecuta cuando se "apaga" la app.
-// TODO: qué es esto?
 process.on("SIGINT", function () {
   const { mongoose } = require("./db");
   mongoose.connection.close(function () {
