@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const bcrypt = require("bcryptjs");
 
 const userController = {
   show: async (req, res) => {
@@ -19,7 +20,7 @@ const userController = {
         firstname,
         lastname,
         username,
-        password,
+        password: await bcrypt.hash(password, 10),
         email,
         description,
         photo,
