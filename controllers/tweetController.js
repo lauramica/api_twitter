@@ -25,33 +25,38 @@ const tweetController = {
       author.tweets.push(newTweet);
       await author.save();
 
-      return res.json({ msg: "Se ha creado un nuevo tweet" });
+      return res.json({ msg: "Se creó el tweet" });
     } catch (err) {
       console.error(err);
-      return res.json({ msg: "Ha ocurrido un error al crear tweet" });
+      return res.json({ msg: "Ocurrió un error al crear el tweet" });
     }
   },
 
   update: async (req, res) => {
-    const user = req.auth.sub;
-    const tweet = await Tweet.findById(req.params.id);
+    try {
+      const user = req.auth.sub;
+      const tweet = await Tweet.findById(req.params.id);
 
-    if (tweet.likes.includes(user)) {
-      tweet.likes.pull(user);
-    } else {
-      tweet.likes.push(user);
+      if (tweet.likes.includes(user)) {
+        tweet.likes.pull(user);
+      } else {
+        tweet.likes.push(user);
+      }
+      await tweet.save();
+      return res.json({ msg: "Se actualizó el like" });
+    } catch (err) {
+      console.error(err);
+      return res.json({ msg: "Ocurrió un error al actualizar el like" });
     }
-    await tweet.save();
-    return res.json({ msg: "se actualizo like" });
   },
 
   destroy: async (req, res) => {
     try {
       await Tweet.findByIdAndDelete(req.params._id);
-      return res.json({ msg: "se elimino el tweet" });
+      return res.json({ msg: "Se eliminó el tweet" });
     } catch (err) {
       console.error(err);
-      return res.json({ msg: "Ha ocurrido un error al eliminar el tweet" });
+      return res.json({ msg: "Ocurrió un error al eliminar el tweet" });
     }
   },
 };

@@ -9,7 +9,7 @@ const userController = {
       return res.json(user);
     } catch (err) {
       console.error(err);
-      return res.json({ msg: "Ha ocurrido un error al mostrar usuario" });
+      return res.json({ msg: "Ocurrió un error al mostrar el usuario" });
     }
   },
 
@@ -26,10 +26,10 @@ const userController = {
         photo,
       });
       await newUser.save();
-      return res.json({ msg: "se ha creado el user" });
+      return res.json({ msg: "Se creó el usuario" });
     } catch (err) {
       console.error(err);
-      return res.json({ msg: "Ha ocurrido un error al crear usuario" });
+      return res.json({ msg: "Ocurrió un error al crear el usuario" });
     }
   },
 };

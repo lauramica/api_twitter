@@ -12,7 +12,7 @@ router.use(
 
 router.get("/", tweetController.index);
 router.post("/", tweetController.store);
-router.patch("/:id", tweetController.update); //likes
+router.patch("/:id", tweetController.update);
 router.delete("/:id", tweetController.destroy);
 
 module.exports = router;
