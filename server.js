@@ -1,10 +1,11 @@
 require("dotenv").config();
 const express = require("express");
 const routes = require("./routes");
+const cors = require("cors");
 const port = process.env.APP_PORT;
 const app = express();
 
-// app.use(cors()); // Para habilitar esta línea es necesario instalar la librería `cors`.
+app.use(cors());
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

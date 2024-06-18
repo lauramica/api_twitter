@@ -4,7 +4,7 @@ const tweetSchema = new Schema(
   {
     user: { type: Schema.Types.ObjectId, ref: "User" },
     content: { type: String, require: true, maxLength: 140 },
-    likes: [],
+    likes: [0],
   },
   {
     timestamps: true,
