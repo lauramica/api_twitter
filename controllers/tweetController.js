@@ -4,7 +4,7 @@ const User = require("../models/User");
 const tweetController = {
   index: async (req, res) => {
     try {
-      const tweets = await Tweet.find().limit(20);
+      const tweets = await Tweet.find().limit(20).populate("user");
       return res.json(tweets);
     } catch (err) {
       console.error(err);
