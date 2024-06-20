@@ -10,7 +10,7 @@ async function getToken(req, res) {
   if (!match) return res.json({ msg: "Verifique sus credenciales" });
 
   const token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET);
-  return res.json(token);
+  return res.json({ token, userId: user.id });
 }
 
 module.exports = { getToken };
