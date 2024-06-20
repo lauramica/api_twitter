@@ -4,7 +4,7 @@ const User = require("../models/User");
 const tweetController = {
   index: async (req, res) => {
     try {
-      const tweets = await Tweet.find().limit(20).populate("user");
+      const tweets = await Tweet.find().populate("user");
       return res.json(tweets);
     } catch (err) {
       console.error(err);
@@ -13,7 +13,6 @@ const tweetController = {
   },
 
   store: async (req, res) => {
-    console.log(req.body);
     try {
       const user = req.auth.sub;
       const { tweet } = req.body;
@@ -52,7 +51,6 @@ const tweetController = {
   },
 
   destroy: async (req, res) => {
-    console.log(req.params);
     try {
       await Tweet.findByIdAndDelete(req.params.id);
       return res.json({ msg: "Se eliminó el tweet" });
