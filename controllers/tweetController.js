@@ -13,19 +13,20 @@ const tweetController = {
   },
 
   store: async (req, res) => {
+    console.log(req.body);
     try {
       const user = req.auth.sub;
-      const { content } = req.body;
+      const { tweet } = req.body;
       const author = await User.findById(user);
       const newTweet = new Tweet({
         user,
-        content,
+        content: tweet,
       });
       await newTweet.save();
       author.tweets.push(newTweet);
       await author.save();
 
-      return res.json({ msg: "Se creó el tweet" });
+      return res.json({ newTweet });
     } catch (err) {
       console.error(err);
       return res.json({ msg: "Ocurrió un error al crear el tweet" });
@@ -51,8 +52,9 @@ const tweetController = {
   },
 
   destroy: async (req, res) => {
+    console.log(req.params);
     try {
-      await Tweet.findByIdAndDelete(req.params._id);
+      await Tweet.findByIdAndDelete(req.params.id);
       return res.json({ msg: "Se eliminó el tweet" });
     } catch (err) {
       console.error(err);
