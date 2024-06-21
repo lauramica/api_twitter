@@ -9,7 +9,7 @@ const userSchema = new Schema(
     email: { type: String, require: true, unique: true },
     description: { type: String },
     photo: String,
-    tweets: [{ type: Schema.Types.ObjectId, ref: "Tweets" }],
+    tweets: [{ type: Schema.Types.ObjectId, ref: "Tweet" }],
   },
   {
     timestamps: true,

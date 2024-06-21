@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const userController = {
   index: async (req, res) => {
     try {
-      const users = await User.find().select("-password");
+      const users = await User.find().select("-password").populate("tweets");
       return res.json(users);
     } catch (err) {
       console.error(err);
@@ -14,7 +14,7 @@ const userController = {
   show: async (req, res) => {
     try {
       const { username } = req.params;
-      const user = await User.findOne({ username }).select("-password");
+      const user = await User.findOne({ username }).select("-password").populate("tweets");
       return res.json(user);
     } catch (err) {
       console.error(err);
