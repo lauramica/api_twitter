@@ -17,7 +17,7 @@ module.exports = async () => {
       password: hashedPassword,
       email: faker.internet.email({ firstName, lastName, provider: "gmail.com" }),
       description: faker.lorem.sentence({ max: 10 }),
-      photo: faker.image.avatar(),
+      avatar: faker.image.avatar(),
     });
   }
 

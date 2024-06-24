@@ -17,7 +17,7 @@ async function getToken(req, res) {
     lastname: user.lastname,
     username: user.username,
     description: user.description,
-    photo: user.photo,
+    avatar: user.avatar,
   });
 }
 

@@ -1,3 +1,4 @@
+const formidable = require("formidable");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
@@ -24,18 +25,26 @@ const userController = {
 
   store: async (req, res) => {
     try {
-      const { firstname, lastname, username, password, email, description, photo } = req.body;
-      const newUser = new User({
-        firstname,
-        lastname,
-        username,
-        password: await bcrypt.hash(password, 10),
-        email,
-        description,
-        photo,
+      const form = formidable({
+        uploadDir: __dirname + "/../public/img",
+        keepExtensions: true,
       });
-      await newUser.save();
-      return res.json({ msg: "Se creó el usuario" });
+
+      form.parse(req, async (err, fields, files) => {
+        const { firstname, lastname, username, password, email, description } = fields;
+        const avatar = files.avatar.newFilename;
+        const newUser = new User({
+          firstname,
+          lastname,
+          username,
+          password: await bcrypt.hash(password, 10),
+          email,
+          description,
+          avatar,
+        });
+        await newUser.save();
+        return res.json({ msg: "Se creó el usuario" });
+      });
     } catch (err) {
       console.error(err);
       return res.json({ msg: "Ocurrió un error al crear el usuario" });
