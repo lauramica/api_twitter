@@ -32,7 +32,8 @@ const userController = {
 
       form.parse(req, async (err, fields, files) => {
         const { firstname, lastname, username, password, email, description } = fields;
-        const avatar = files.avatar.newFilename;
+        const defaultAvatar = "https://avatars.githubusercontent.com/u/81551679";
+        const avatar = files.avatar ? files.avatar.newFilename : defaultAvatar;
         const newUser = new User({
           firstname,
           lastname,

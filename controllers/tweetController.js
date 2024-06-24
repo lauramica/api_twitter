@@ -4,7 +4,9 @@ const User = require("../models/User");
 const tweetController = {
   index: async (req, res) => {
     try {
-      const tweets = await Tweet.find().populate("user");
+      const tweets = await Tweet.find()
+        .sort([["createdAt", "desc"]])
+        .populate("user");
       return res.json(tweets);
     } catch (err) {
       console.error(err);
